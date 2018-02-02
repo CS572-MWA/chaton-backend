@@ -20,6 +20,16 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.set('x-powered-by', false);
 
+app.use((req, res, next) =>{
+  res.like = (data, err) => {
+    if (err){
+      res.json({ status: 'failed', data: null, error: err });
+    }else{
+      res.json({ status: 'success', data: data, error: null });
+    }
+  }
+  next();
+});
 
 app.use('/', index);
 app.use('/users', users);

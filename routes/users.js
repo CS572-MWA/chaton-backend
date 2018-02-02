@@ -4,41 +4,34 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var User = require('../models/User.js');
 
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
   User.find(function (err, users) {
-    if (err) return next(err);
-    res.json(users);
+    res.like(users,err);
   });
 });
 
-router.get('/:id', function(req, res, next) {
+router.get('/:id', function(req, res) {
   User.findById(req.params.id, function (err, post) {
-    if (err) return next(err);
-    res.json(post);
+    res.like(post,err);
   });
 });
 
-router.post('/', function(req, res, next) {
+router.post('/', function(req, res) {
   User.create(req.body, function (err, post) {
-    if (err) return next(err);
-    res.json(post);
+    res.like(post,err);
   });
 });
 
-router.put('/:id', function(req, res, next) {
+router.put('/:id', function(req, res) {
   User.findByIdAndUpdate(req.params.id, req.body, function (err, post) {
-    if (err) return next(err);
-    res.json(post);
+    res.like(post,err);
   });
 });
 
-router.delete('/:id', function(req, res, next) {
+router.delete('/:id', function(req, res) {
   User.findByIdAndRemove(req.params.id, req.body, function (err, post) {
-    if (err) return next(err);
-    res.json(post);
+    res.like(post,err);
   });
 });
 
 module.exports = router;
-
-//{ username: 'jude', email: 'cj@gmail.com', password: 'code', age:20, gender: 'male', location: { lat: -90.3434, long: 34.3435 } }
