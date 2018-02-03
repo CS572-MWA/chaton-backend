@@ -1,3 +1,5 @@
+const bcrypt = require('bcryptjs')
+
 exports.addUser = (req, res, next) => {
     req.assert('username', 'Username is required').notEmpty();
 	req.assert('email', 'Email is required').notEmpty();
@@ -9,6 +11,7 @@ exports.addUser = (req, res, next) => {
 	if (errors){
 		res.like(null, { code: -1, msg: errors.map(er => er.msg)});
 	}else{
+		req.body.password = bcrypt.hashSync(req.body.password, 8);
 		next();
 	}
 };

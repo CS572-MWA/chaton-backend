@@ -9,11 +9,12 @@ var groups = require('./routes/groups');
 var logs = require('./routes/logs');
 
 const validator = require('express-validator')
+const config = require('./config/main')
 
 const app = express();
 mongoose.Promise = global.Promise;
 
-mongoose.connect('mongodb://localhost:27017/chaton')
+mongoose.connect(config.database)
   .then(() =>  console.log('mongodb connection succesful'))
   .catch((err) => console.error(err));
 
