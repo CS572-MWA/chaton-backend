@@ -1,17 +1,19 @@
 var User = require('./../models/user');
 const jwt = require('jsonwebtoken')
 const config = require('./../config/main')
+const bcrypt = require('bcrypt');
 
 exports.login = (req, res) => {
   User.findOne({ email: req.body.email }, function (err, user) {
     const result = { auth: false, token: null };
     if (err) return res.like(user, err);
-    if (check) return res.like(user, result)
+    //if (check) return res.like(user, result)
     var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
     if (!passwordIsValid) return res.like(null, result);
     var token = jwt.sign({ id: user._id }, config.secret, {
       expiresIn: 86400
     });
+    console.log(token);
     res.like({ auth: true, token: token }, err);
   });
 };

@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/CS572-MWA/chaton-backend#readme",
   "dependencies": {
+    "bcrypt": "^1.0.3",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.4",
     "express": "^4.16.2",
