@@ -1,37 +1,15 @@
 var express = require('express');
 var router = express.Router();
 
-var mongoose = require('mongoose');
-var Group = require('./../models/Group.js');
+const groupController = require('./../controllers/group');
 
-router.get('/', function(req, res) {
-  Group.find(function (err, groups) {
-    res.like(groups,err);
-  });
-});
+router.route('/')
+  .get(groupController.getGroups)
+  .post(groupController.addGroup);
 
-router.get('/:id', function(req, res) {
-  Group.findById(req.params.id, function (err, post) {
-    res.like(post,err);
-  });
-});
-
-router.post('/', function(req, res) {
-  Group.create(req.body, function (err, post) {
-    res.like(post,err);
-  });
-});
-
-router.put('/:id', function(req, res) {
-  Group.findByIdAndUpdate(req.params.id, req.body, function (err, post) {
-    res.like(post,err);
-  });
-});
-
-router.delete('/:id', function(req, res) {
-  Group.findByIdAndRemove(req.params.id, req.body, function (err, post) {
-    res.like(post,err);
-  });
-});
+router.route('/:id')
+  .get(groupController.getGroup)
+  .delete(groupController.deleteGroup)
+  .put(groupController.updateGroup);
 
 module.exports = router;

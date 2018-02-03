@@ -1,14 +1,18 @@
 var express = require('express');
 var router = express.Router();
+
 const userController = require('./../controllers/user');
+const userMiddleware = require('./../middleware/user');
 
 router.route('/')
   .get(userController.getUsers)
-  .post(userController.addUser);
+  .post(userMiddleware.addUser,
+    userController.addUser);
 
 router.route('/:id')
-  .get(userController.updateUser)
+  .get(userController.getUser)
   .delete(userController.deleteUser)
-  .put(userController.updateUser);
+  .put(userMiddleware.updateUser,
+    userController.updateUser);
 
 module.exports = router;

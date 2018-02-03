@@ -8,6 +8,8 @@ var users = require('./routes/users');
 var groups = require('./routes/groups');
 var logs = require('./routes/logs');
 
+const validator = require('express-validator')
+
 const app = express();
 mongoose.Promise = global.Promise;
 
@@ -18,6 +20,7 @@ mongoose.connect('mongodb://localhost:27017/chaton')
 app.use(cors());
 app.use(bodyParser.json());	
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(validator());
 app.set('x-powered-by', false);
 
 app.use((req, res, next) =>{
