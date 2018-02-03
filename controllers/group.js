@@ -1,4 +1,4 @@
-var Group = require('./../models/Group.js');
+var Group = require('./../models/group');
 
 exports.getGroups = (req, res) => {
   Group.find( (err, groups) => {
