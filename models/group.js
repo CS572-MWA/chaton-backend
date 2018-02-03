@@ -4,8 +4,9 @@ const Schema = mongoose.Schema,
 
 const logSchema = Schema({ 
   name: String,
-  users: [{ type : ObjectId, ref: 'User' }],
-  created_at: { type: Date, default: Date.now }
+  users: [{ type : ObjectId, ref: 'User' }]
+},{
+  timestamps: true
 });
 
 module.exports = mongoose.model('Group', logSchema);
