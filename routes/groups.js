@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var mongoose = require('mongoose');
-var Group = require('../models/Group.js');
+var Group = require('./../models/Group.js');
 
 router.get('/', function(req, res) {
   Group.find(function (err, groups) {
