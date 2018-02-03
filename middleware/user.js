@@ -1,5 +1,17 @@
 const bcrypt = require('bcryptjs')
 
+exports.login = (req, res, next) => {
+    req.assert('email', 'Username is required').notEmpty();
+	req.assert('password', 'Password is required').notEmpty();
+	const errors = req.validationErrors();
+	if (errors){
+		res.like(null, { code: -1, msg: errors.map(er => er.msg)});
+	}else{
+		req.body.password = bcrypt.hashSync(req.body.password, 8);
+		next();
+	}
+};
+
 exports.addUser = (req, res, next) => {
     req.assert('username', 'Username is required').notEmpty();
 	req.assert('email', 'Email is required').notEmpty();

@@ -15,4 +15,8 @@ router.route('/:id')
   .put(userMiddleware.updateUser,
     userController.updateUser);
 
+router.route('/login')
+  .post(userMiddleware.login,
+    userController.login)
+
 module.exports = router;
