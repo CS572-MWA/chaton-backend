@@ -13,7 +13,7 @@ exports.addGroup = (req, res) => {
 };
 
 exports.getGroup = (req, res) => {
-  User.findById(req.params.id, function (err, post) {
+  Group.findById(req.params.id, function (err, post) {
     res.like(post,err);
   });
 };

@@ -11,5 +11,7 @@ router.route('/groups/')
 router.route('/groups/:id')
   .put(authMiddleware.checkedAuth,
     userController.addUserForGroup)
+  .delete(authMiddleware.checkedAuth, 
+    userController.removeUserForGroup);
 
 module.exports = router;

@@ -10,10 +10,15 @@ exports.getGroups = (req, res) => {
       res.like(groups, err);
     });
 };
-  
+
 exports.addUserForGroup = (req, res) => {
   Group.findByIdAndUpdate(req.params.id, { $addToSet: { users: { $each: req.body.users } } }, (err, groups) => {
     res.like(groups, err);
   })
 };
   
+exports.removeUserForGroup = (req, res) => {
+  Group.findByIdAndUpdate(req.params.id, { $pullAll: { users: req.body.users } }).exec((err, groups) => {
+    res.like(groups, err);
+  })
+};
