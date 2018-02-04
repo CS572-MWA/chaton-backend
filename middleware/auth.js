@@ -1,14 +1,15 @@
-const config = require('./../config/main')
+const config = require('./../config/main');
+const jwt = require('jsonwebtoken');
 
 exports.checkedAuth = (req, res, next) => {
-  const token = req.body.token || req.query.token || req.headers['x-access-token'];
-  console.log("xp");
-  if (token) {
+  var token = req.headers['authorization'];
+  if (token && token.length > 8) {
+    token = token.substr(7);
     jwt.verify(token, config.secret, function(err, decoded) {      
       if (err) {
         return res.like(null,{ code: 0, message: 'Failed to authenticate token.' });
       } else {
-        req.decoded = decoded;    
+        req.user = decoded;    
         next();
       }
     });

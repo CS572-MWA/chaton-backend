@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 //import my usage
 var index = require('./routes/index');
-var users = require('./routes/users');
+var users = require('./routes/users/users');
+var usersGroup = require('./routes/users/groups');
 var groups = require('./routes/groups');
 var logs = require('./routes/logs');
 
@@ -36,7 +37,7 @@ app.use((req, res, next) =>{
 });
 
 app.use('/', index);
-app.use('/users', users);
+app.use('/users', usersGroup, users);
 app.use('/logs', logs);
 app.use('/groups', groups);
 
