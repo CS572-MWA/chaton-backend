@@ -3,16 +3,17 @@ var router = express.Router();
 
 const userController = require('./../controllers/user');
 const userMiddleware = require('./../middleware/user');
+const authMiddleware = require('./../middleware/auth');
 
 router.route('/')
-  .get(userController.getUsers)
+  .get(authMiddleware.checkedAuth,userController.getUsers)
   .post(userMiddleware.addUser,
     userController.addUser);
 
 router.route('/:id')
-  .get(userController.getUser)
-  .delete(userController.deleteUser)
-  .put(userMiddleware.updateUser,
+  .get(authMiddleware.checkedAuth, userController.getUser)
+  .delete(authMiddleware.checkedAuth, userController.deleteUser)
+  .put(authMiddleware.checkedAuth, userMiddleware.updateUser,
     userController.updateUser);
 
 router.route('/login')
