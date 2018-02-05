@@ -41,6 +41,6 @@ app.use('/users', usersGroup, users);
 app.use('/logs', logs);
 app.use('/groups', groups);
 
-app.listen(3000, function(){
+app.listen(3000,'10.10.11.94', function(){
   console.log('listening on *: 3000');
 });

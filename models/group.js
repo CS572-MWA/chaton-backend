@@ -4,7 +4,8 @@ const Schema = mongoose.Schema,
 
 const logSchema = Schema({ 
   name: String,
-  users: [{ type : ObjectId, ref: 'User' }]
+  users: [{ type : ObjectId, ref: 'User' }],
+  status: { type: Number, default: 2 },
 },{
   timestamps: true
 });

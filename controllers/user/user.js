@@ -27,33 +27,21 @@ exports.getUsers = (req, res) => {
 };
 
 exports.addUser = (req, res) => {
-  User.create(req.body, (err, user) => {
-    if (err){
-      res.like(user,err);
-    }else{
+  User.create(req.body)
+    .then(user => {
       var token = jwt.sign({ id: user._id, email: user.email, username: user.username, gender: user.gender, age: user.age }, config.secret, {
         expiresIn: 86400
       });
-      res.like({ auth: true, token: token }, err);
-    }
-  });
-};
-
-exports.getGroups = (req, res) => {
-  Group.find({ users: req.user.id })
-    .populate({
-      path: 'users',
-      select: 'username email age gender'
+      return { token : { auth: true, token: token }, user: user };
+    }).then(data => {
+      Group.update({ status: 0 }, { $addToSet: { users: data.user._id } }, { new: true }, (err, data) => {
+        console.log("add user in public: ", data);
+      });
+      res.like(data, null);
     })
-    .exec((err, groups) => {
-      res.like(groups, err);
+    .catch(err => {
+      res.like(null, err);
     });
-};
-
-exports.addUserForGroup = (req, res) => {
-  Group.findByIdAndUpdate(req.params.id, { $addToSet: { users: { $each: req.body.users } } }, (err, groups) => {
-    res.like(groups, err);
-  })
 };
 
 exports.getUser = (req, res) => {
@@ -63,7 +51,7 @@ exports.getUser = (req, res) => {
 };
 
 exports.updateUser = (req, res) => {
-  User.findByIdAndUpdate(req.user.id, req.body, {upsert: true, new: true}, (err, user) => {
+  User.findByIdAndUpdate(req.user.id, req.body, { upsert: true, new: true }, (err, user) => {
     if (err){
       res.like({ auth: true, token: token, user: user }, err);
     }else{

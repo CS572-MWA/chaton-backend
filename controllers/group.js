@@ -1,4 +1,5 @@
 var Group = require('./../models/group');
+const mongoose = require('mongoose');
 
 exports.getGroups = (req, res) => {
   Group.find( (err, groups) => {
@@ -7,9 +8,22 @@ exports.getGroups = (req, res) => {
 };
 
 exports.addGroup = (req, res) => {
-  Group.create(req.body, function (err, post) {
-    res.like(post,err);
-  });
+  const options = {
+    path: 'users',
+    select: 'username email age gender'
+  };
+  Group.findOneAndUpdate(
+      { _id:mongoose.Types.ObjectId() }, 
+      req.body, {
+        new: true,
+        upsert: true,
+        runValidators: true,
+        setDefaultsOnInsert: true,
+        populate: options
+      },
+      (err, group) => {
+        res.like(group, err);
+      });
 };
 
 exports.getGroup = (req, res) => {

@@ -12,7 +12,11 @@ exports.getGroups = (req, res) => {
 };
 
 exports.addUserForGroup = (req, res) => {
-  Group.findByIdAndUpdate(req.params.id, { $addToSet: { users: { $each: req.body.users } } }, (err, groups) => {
+  const options = {
+    path: 'users',
+    select: 'username email age gender'
+  };
+  Group.findByIdAndUpdate(req.params.id, { $addToSet: { users: { $each: req.body.users } } }, { upsert: true, new: true, runValidators: true, populate: options }, (err, groups) => {
     res.like(groups, err);
   })
 };
@@ -20,7 +24,7 @@ exports.addUserForGroup = (req, res) => {
 exports.removeUserForGroup = (req, res) => {
   console.log(req.body)
   console.log(req.params)
-  Group.findByIdAndUpdate(req.params.id, { $pull: { users: req.params.user_id } }).exec((err, groups) => {
+  Group.findByIdAndUpdate(req.params.id, { $pull: { users: req.params.user_id } }, {upsert: true, new: true}).exec((err, groups) => {
     res.like(groups, err);
   })
 };
