@@ -42,6 +42,7 @@ app.use((req, res, next) =>{
       res.json({ status: 'success', data: data, error: null });
     }
   };
+  next();
 });
 
 app.use('/', index);
