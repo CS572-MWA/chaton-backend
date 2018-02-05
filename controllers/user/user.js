@@ -63,7 +63,7 @@ exports.getUser = (req, res) => {
 };
 
 exports.updateUser = (req, res) => {
-  User.findByIdAndUpdate(req.user.id, req.body, (err, user) => {
+  User.findByIdAndUpdate(req.user.id, req.body, {upsert: true, new: true}, (err, user) => {
     if (err){
       res.like({ auth: true, token: token, user: user }, err);
     }else{
