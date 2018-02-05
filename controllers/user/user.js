@@ -16,6 +16,9 @@ exports.login = (req, res) => {
       expiresIn: 86400
     });
     console.log(token);
+    Group.addUserForGeoGroup(user, req.geo, (err, result) => {
+      console.log("addUserForGeoGroup: ",err, result);
+    });
     res.like({ auth: true, token: token }, err);
   });
 };
@@ -35,7 +38,7 @@ exports.addUser = (req, res) => {
       return { token : { auth: true, token: token }, user: user };
     }).then(data => {
       Group.update({ status: 0 }, { $addToSet: { users: data.user._id } }, { new: true }, (err, data) => {
-        console.log("add user in public: ", data);
+        // console.log("add user in public: ", data);
       });
       res.like(data, null);
     })

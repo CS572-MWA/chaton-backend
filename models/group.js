@@ -10,4 +10,9 @@ const logSchema = Schema({
   timestamps: true
 });
 
-module.exports = mongoose.model('Group', logSchema);
+module.exports = Group = mongoose.model('Group', logSchema);
+
+module.exports.addUserForGeoGroup = (user, geo, cb) => {
+  const name = geo.get('city') + ", " + geo.get('regionCode') +  ", " +geo.get('countryCode');
+  Group.update({ name: name, status: 1 }, { $addToSet: { users: user._id } }, { upsert: true, new: true }, cb);
+};

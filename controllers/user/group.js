@@ -20,10 +20,8 @@ exports.addUserForGroup = (req, res) => {
     res.like(groups, err);
   })
 };
-  
+
 exports.removeUserForGroup = (req, res) => {
-  console.log(req.body)
-  console.log(req.params)
   Group.findByIdAndUpdate(req.params.id, { $pull: { users: req.params.user_id } }, {upsert: true, new: true}).exec((err, groups) => {
     res.like(groups, err);
   })
