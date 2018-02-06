@@ -12,7 +12,11 @@ const logSchema = Schema({
 
 module.exports = Group = mongoose.model('Group', logSchema);
 
-module.exports.addUserForGeoGroup = (user, geo, cb) => {
+module.exports.addUserForGeoGroup = (user, geo) => {
+  const options = {
+    path: 'users',
+    select: 'username email age gender'
+  };
   const name = geo.get('city') + ", " + geo.get('regionCode') +  ", " +geo.get('countryCode');
-  Group.update({ name: name, status: 1 }, { $addToSet: { users: user._id } }, { upsert: true, new: true }, cb);
+  return Group.findOneAndUpdate({ name: name, status: 1 }, { $addToSet: { users: user._id } }, { upsert: true, new: true, runValidators: true, populate: options  });
 };

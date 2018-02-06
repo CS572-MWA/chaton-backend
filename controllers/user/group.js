@@ -1,14 +1,10 @@
 var Group = require('./../../models/group');
+var Log = require('./../../models/log');
 
 exports.getGroups = (req, res) => {
-  Group.find({ users: req.user.id })
-    .populate({
-      path: 'users',
-      select: 'username email age gender'
-    })
-    .exec((err, groups) => {
-      res.like(groups, err);
-    });
+  Log.getLogs(req.user, (err, data) =>{
+    res.like(data, err);
+  });
 };
 
 exports.addUserForGroup = (req, res) => {
