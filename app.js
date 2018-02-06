@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const PORT = process.env.PORT || 5000
+
 // const fs = require('fs')
 // const logger = require('morgan');
 const validator = require('express-validator')
@@ -51,8 +53,8 @@ app.use('/users', usersGroup, users);
 app.use('/logs', logs);
 app.use('/groups', groups);
 
-const server = app.listen(80, function(){
-  console.log('listening on *: 80');
+const server = app.listen(PORT, function(){
+  console.log('listening on *: 5000');
 });
 const io = require('socket.io').listen(server);
 socket(io);
