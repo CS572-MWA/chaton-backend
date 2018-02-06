@@ -31,6 +31,7 @@ mongoose.connect(config.database)
 
 app.use(cors());
 // app.use(logger('combined', { stream: accessLogStream }))
+app.set('trust proxy', true);
 app.use(bodyParser.json());	
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(validator());

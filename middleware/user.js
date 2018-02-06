@@ -1,5 +1,4 @@
 const bcrypt = require('bcryptjs')
-const publicIp = require('public-ip');
 const where = require('node-where');
 
 exports.login = (req, res, next) => {
@@ -9,7 +8,11 @@ exports.login = (req, res, next) => {
   if (errors){
     res.like(null, { code: -1, msg: errors.map(er => er.msg)});
   }else{
-    where.is(req.ip, function(err, result) {
+    var ip = (req.headers['x-forwarded-for'] ||
+      req.connection.remoteAddress ||
+      req.socket.remoteAddress ||
+      req.connection.socket.remoteAddress).split(",")[0];
+    where.is(ip, function(err, result) {
       req.geo = result;
       next();
     });
