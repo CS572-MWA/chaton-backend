@@ -28,7 +28,7 @@ module.exports = function (io) {
       if (data){
         console.log('new message', data);
         Log.create({ groupId: data.groupId, user: data.userId, content: data.message}, (err, data) =>{
-          console.log("log save process: ", err, data);
+          // console.log("log save process: ", err, data);
         });
         io.sockets.in(data.groupId).emit('refresh logs', data);
       }

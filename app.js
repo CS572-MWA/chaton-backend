@@ -2,8 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const fs = require('fs')
-const logger = require('morgan');
+// const fs = require('fs')
+// const logger = require('morgan');
 const validator = require('express-validator')
 const path = require('path')
 const socket = require('./socket/index')
@@ -21,14 +21,14 @@ var logs = require('./routes/logs');
 const app = express();
 mongoose.Promise = global.Promise;
 
-const accessLogStream = fs.createWriteStream(path.join(__dirname, '/log/access.log'), {flags: 'a'})
+// const accessLogStream = fs.createWriteStream(path.join(__dirname, '/log/access.log'), {flags: 'a'})
 
 mongoose.connect(config.database)
   .then(() =>  console.log('mongodb connection succesful'))
   .catch((err) => console.error(err));
 
 app.use(cors());
-app.use(logger('combined', { stream: accessLogStream }))
+// app.use(logger('combined', { stream: accessLogStream }))
 app.use(bodyParser.json());	
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(validator());

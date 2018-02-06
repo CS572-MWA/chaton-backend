@@ -5,29 +5,6 @@ const config = require('./../../config/main')
 const bcrypt = require('bcrypt');
 
 exports.login = (req, res) => {
-  // User.findOne({ email: req.body.email }, function (err, user) {
-  //   const result = { auth: false, token: null };
-  //   if (err) return res.like(user, err);
-  //   if (!user) return res.like(null, { message: 'User not found' });
-  //   var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
-  //   result.password = passwordIsValid;
-  //   if (!passwordIsValid) return res.like(null, result);
-  //   var token = jwt.sign({ id: user._id, email: user.email, username: user.username, gender: user.gender, age: user.age }, config.secret, {
-  //     expiresIn: 86400
-  //   });
-  //   console.log(token);
-  //   Group.addUserForGeoGroup(user, req.geo, (err, result) => { // uun deer public and geo group yavuulna
-  //     console.log("addUserForGeoGroup: ",err, result);
-  //     if (err){
-  //       res.like({ auth: false, token: token, groups: result }, err);  
-  //     }else{
-  //       console.log({ auth: true, token: token, groups: result });
-  //       res.like({ auth: true, token: token, groups: result }, err);
-  //     }
-  //   });
-    
-  // });
-
   let result = { auth: false, token: null };
   User.findOne({ email: req.body.email })
     .then(user => {
@@ -52,10 +29,8 @@ exports.login = (req, res) => {
       result.auth = true;
       result.groups = groups;
       res.like(result, null);
-      console.log("user: ", result);
     })
     .catch(err => {
-      console.log(err);
       res.like(null, err);
     })
 };
@@ -75,7 +50,6 @@ exports.addUser = (req, res) => {
       return { token : { auth: true, token: token }, user: user };
     }).then(data => {
       Group.update({ status: 0 }, { $addToSet: { users: data.user._id } }, { new: true }, (err, data) => {
-        // console.log("add user in public: ", data);
       });
       res.like(data, null);
     })
