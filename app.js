@@ -51,8 +51,8 @@ app.use('/users', usersGroup, users);
 app.use('/logs', logs);
 app.use('/groups', groups);
 
-const server = app.listen(3000, function(){
-  console.log('listening on *: 3000');
+const server = app.listen(80, function(){
+  console.log('listening on *: 80');
 });
 const io = require('socket.io').listen(server);
 socket(io);
