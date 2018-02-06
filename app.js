@@ -6,6 +6,7 @@ const fs = require('fs')
 const logger = require('morgan');
 const validator = require('express-validator')
 const path = require('path')
+const socket = require('./socket/index')
 
 //import my usage
 const config = require('./config/main')
@@ -50,6 +51,8 @@ app.use('/users', usersGroup, users);
 app.use('/logs', logs);
 app.use('/groups', groups);
 
-app.listen(3000, function(){
+const server = app.listen(3000, function(){
   console.log('listening on *: 3000');
 });
+const io = require('socket.io').listen(server);
+socket(io);

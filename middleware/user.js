@@ -10,13 +10,12 @@ exports.login = (req, res, next) => {
   if (errors){
     res.like(null, { code: -1, msg: errors.map(er => er.msg)});
   }else{
-    next();
-    // publicIp.v4().then(ip => {
-    //   where.is(ip, function(err, result) {
-    //     req.geo = result;
-    //     next();
-    //   });
-    // });
+    publicIp.v4().then(ip => {
+      where.is(ip, function(err, result) {
+        req.geo = result;
+        next();
+      });
+    });
   }
 };
 
