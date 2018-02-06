@@ -19,10 +19,6 @@ var data = [
 			{
 				'name': 'Public',
 				'status': 0
-			},
-			{
-				'name': 'Geo',
-				'status': 1
 			}
 		]
 	}

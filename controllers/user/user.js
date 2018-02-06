@@ -50,8 +50,9 @@ exports.addUser = (req, res) => {
       return { token : { auth: true, token: token }, user: user };
     }).then(data => {
       Group.update({ status: 0 }, { $addToSet: { users: data.user._id } }, { new: true }, (err, data) => {
+        if (err) res.like(null, err);
+        else res.like(data, null);
       });
-      res.like(data, null);
     })
     .catch(err => {
       res.like(null, err);
