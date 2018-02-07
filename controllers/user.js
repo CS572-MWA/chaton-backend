@@ -1,7 +1,7 @@
-var User = require('./../../models/user');
-var Group = require('./../../models/group');
+var User = require('./../models/user');
+var Group = require('./../models/group');
 const jwt = require('jsonwebtoken')
-const config = require('./../../config/main')
+const config = require('./../config/main')
 const bcrypt = require('bcrypt');
 
 exports.login = (req, res) => {

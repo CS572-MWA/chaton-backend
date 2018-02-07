@@ -1,11 +1,7 @@
-var Group = require('./../models/group');
-const mongoose = require('mongoose');
 
-exports.getGroups = (req, res) => {
-  Group.find( (err, groups) => {
-    res.like(groups,err);
-  });
-};
+const mongoose = require('mongoose');
+var Group = require('./../models/group');
+const Log = require('./../models/log');
 
 exports.addGroup = (req, res) => {
   const options = {
@@ -26,20 +22,24 @@ exports.addGroup = (req, res) => {
       });
 };
 
-exports.getGroup = (req, res) => {
-  Group.findById(req.params.id, function (err, post) {
-    res.like(post,err);
+exports.getGroups = (req, res) => {
+  Log.getLogs(req.user, (err, data) =>{
+    res.like(data, err);
   });
 };
 
-exports.updateGroup = (req, res) => {
-  Group.findByIdAndUpdate(req.params.id, req.body, function (err, post) {
-    res.like(post,err);
-  });
+exports.addUserForGroup = (req, res) => {
+  const options = {
+    path: 'users',
+    select: 'username email age gender'
+  };
+  Group.findByIdAndUpdate(req.params.id, { $addToSet: { users: { $each: req.body.users } } }, { upsert: true, new: true, runValidators: true, populate: options }, (err, groups) => {
+    res.like(groups, err);
+  })
 };
 
-exports.deleteGroup = (req, res) => {
-  Group.findByIdAndRemove(req.params.id, req.body, function (err, post) {
-    res.like(post,err);
-  });
+exports.removeUserForGroup = (req, res) => {
+  Group.findByIdAndUpdate(req.params.id, { $pull: { users: req.params.user_id } }, {upsert: true, new: true}).exec((err, groups) => {
+    res.like(groups, err);
+  })
 };
