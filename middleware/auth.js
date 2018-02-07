@@ -7,13 +7,13 @@ exports.checkedAuth = (req, res, next) => {
     token = token.substr(7);
     jwt.verify(token, config.secret, function(err, decoded) {      
       if (err) {
-        return res.like(null,{ code: 0, message: 'Failed to authenticate token.' });
+        return res.like(null,{ code: 401, message: 'Failed to authenticate token.' });
       } else {
         req.user = decoded;    
         next();
       }
     });
   } else {
-    return res.like(null,{ code: 0, message: 'No token provided.' });
+    return res.like(null,{ code: 401, message: 'No token provided.' });
   }
 };
