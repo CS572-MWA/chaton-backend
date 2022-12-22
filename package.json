@@ -24,7 +24,7 @@
     "cors": "^2.8.4",
     "express": "^4.16.2",
     "express-validator": "^4.3.0",
-    "jsonwebtoken": "^8.1.1",
+    "jsonwebtoken": "^9.0.0",
     "mongoose": "^5.0.3",
     "mongoose-seed": "^0.6.0",
     "node-where": "^1.1.0",
