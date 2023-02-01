@@ -28,7 +28,7 @@
     "mongoose": "^5.0.3",
     "mongoose-seed": "^0.6.0",
     "node-where": "^1.1.0",
-    "public-ip": "^2.4.0",
+    "public-ip": "^6.0.1",
     "socket.io": "^2.0.4"
   },
   "devDependencies": {
